@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final NOC Letter</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: "Times New Roman", Times, serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .page {
+            background-color: white;
+            width: 210mm;
+            min-height: 297mm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .border-frame {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px dotted #333;
+            padding: 4px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pattern-border {
+            flex-grow: 1;
+            border: 1px double #333;
+            padding: 40px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Frame lines */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid #555;
+            pointer-events: none;
+        }
+
+        .page::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 4px double #555;
+            pointer-events: none;
+        }
+
+        /* Updated Watermark CSS for Image */
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            opacity: 0.1;
+            /* Very light for watermark effect */
+            pointer-events: none;
+            z-index: 0;
+            text-align: center;
+        }
+
+        .watermark img {
+            width: 100%;
+            height: auto;
+        }
+
+        .content-area {
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #000;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Logo Section */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            height: 80px;
+            /* Adjust height as needed */
+            width: auto;
+        }
+
+        .doc-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 12pt;
+        }
+
+        .ref-number {
+            text-align: center;
+            font-weight: bold;
+            font-size: 10pt;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+        }
+
+        .date-line {
+            margin-bottom: 20px;
+        }
+
+        .recipient-block {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .subject {
+            margin-bottom: 20px;
+            text-align: justify;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .salutation {
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .signature-block {
+            margin-top: 50px;
+            margin-bottom: 25px;
+        }
+
+        .sig-title {
+            font-weight: bold;
+        }
+
+        .digital-note {
+            margin-top: 5px;
+            font-size: 10pt;
+        }
+
+        @media (max-width: 850px) {
+            .page {
+                width: 100%;
+                height: auto;
+            }
+
+            .pattern-border {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="border-frame">
+            <div class="pattern-border">
+
+                <!-- Watermark Image -->
+                <div class="watermark">
+                    <img src="images/webel.png" alt="Watermark">
+                </div>
+
+                <div class="content-area">
+
+                    <!-- Header Logo Image -->
+                    <div class="logo-container">
+                        <img src="images/webel.png" alt="Webel Logo" class="header-logo">
+                    </div>
+
+                    <!-- Document Header -->
+                    <div class="doc-title">
+                        Final NOC of IT/ITeS Renting (Application Number: <%= data?._application_number %>)
+                    </div>
+
+                    <div class="ref-number">
+                        <%= data?._ref_number %>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="date-line">
+                        Date: <%= data?._current_date %>
+                    </div>
+
+                    <!-- Recipient Info -->
+                    <div class="recipient-block">
+                        Name of Company: <%= data?._company_name %><br>
+                            Address: <%= data?._company_address %>
+                    </div>
+
+                    <!-- Subject -->
+                    <div class="subject">
+                        Sub: Permission towards sublet of space of <%= data?._sublet_area_sqft %> sq. ft. super built up
+                            area at <%= data?._space_description %>
+                    </div>
+
+                    <div class="salutation">
+                        Sir,
+                    </div>
+
+                    <!-- Body Paragraph 1 -->
+                    <p>
+                        This has reference to your (approval letter with UDIN: <span class="bold">
+                            <%= data?._udin %>
+                        </span>) regarding the permission for subletting the space to M/S <span class="bold">
+                            <%= data?._tenant_name %>
+                        </span> at <%= data?._space_description %>.
+                    </p>
+
+                    <!-- Body Paragraph 2 -->
+                    <p>
+                        We would like to confirm our ‘No Objection’ for sub-letting the <%= data?._sublet_area_sqft %>
+                            sq. ft. space to M/S <span class="bold">
+                                <%= data?._tenant_name %>
+                            </span> for carrying out "IT&ITes" activities as declared by M/S <span class="bold">
+                                <%= data?._tenant_name %>
+                            </span> vide their letter dated <%= data?._tenant_letter_date %>.
+                                Your Final NOC is effective from <%= data?._noc_start_date %> to <%= data?._noc_end_date
+                                        %>.
+                                        The NOC would lapse automatically as soon as the said tenancies are expired by
+                                        influx of time or the same are determined earlier.
+                    </p>
+
+                    <p>
+                        You are advised to comply all legal formalities regarding agreement with your tenants and inform
+                        NDITA about the existence of the said firm in Sector-V area.
+                    </p>
+
+                    <p>
+                        You will have required to pay permission fees @ Rs.<%= data?._permission_fee_rate %>/- per sq.
+                            ft. (permission fees is subject to change from time to time) of the super built up area
+                            along with applicable goods & services taxes to W.B.E.I.D.C. Ltd by the 7th day of every
+                            calendar month. Such fees shall be paid in advance in every month, irrespective of your
+                            receiving rent from the tenant and the non-payment of Permission fees or any kind of
+                            non-compliance may cause automatic cancellation/withdrawal of the NOC granted.
+                    </p>
+
+                    <p>
+                        Moreover, you are requested to inform us about the vacancy and fill up of premises within the
+                        month of its happening otherwise permission fees will be charged upto date as mentioned in the
+                        agreement without any reversal thereon.
+                    </p>
+
+                    <p>
+                        Thanking you,
+                    </p>
+
+                    <!-- Signature Block -->
+                    <div class="signature-block">
+                        <div class="sig-title">Authorised Signatory</div>
+                        <div class="sig-title">For Managing Director, Webel</div>
+                        <div class="digital-note">(This document is digitally signed and does not require physical
+                            signature)</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
