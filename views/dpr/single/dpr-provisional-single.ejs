@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provisional Vetting of DPR</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: "Times New Roman", Times, serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .page {
+            background-color: white;
+            width: 210mm;
+            min-height: 297mm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .border-frame {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px dotted #333;
+            padding: 4px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pattern-border {
+            flex-grow: 1;
+            border: 1px double #333;
+            padding: 40px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Standard Reference Decorative Borders */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid #555;
+            pointer-events: none;
+        }
+
+        .page::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 4px double #555;
+            pointer-events: none;
+        }
+
+        /* Watermark standard */
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+            text-align: center;
+        }
+
+        .watermark img {
+            width: 100%;
+            height: auto;
+        }
+
+        .content-area {
+            font-size: 11.5pt;
+            line-height: 1.6;
+            color: #000;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            height: 80px;
+            width: auto;
+        }
+
+        .doc-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 25px;
+            font-size: 13pt;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .list-item {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .sub-list {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        .date-line {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .signature-block {
+            margin-top: 20px;
+        }
+
+        .sig-title {
+            font-weight: bold;
+            display: block;
+        }
+
+        .digital-note {
+            margin-top: 5px;
+            font-size: 10pt;
+        }
+
+        @media (max-width: 850px) {
+            .page {
+                width: 100%;
+                height: auto;
+            }
+
+            .pattern-border {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="border-frame">
+            <div class="pattern-border">
+
+                <!-- Watermark -->
+                <div class="watermark">
+                    <img src="images/webel.png" alt="Watermark">
+                </div>
+
+                <div class="content-area">
+
+                    <!-- Header Logo -->
+                    <div class="logo-container">
+                        <img src="images/webel.png" alt="Webel Logo" class="header-logo">
+                    </div>
+
+                    <!-- Document Header -->
+                    <div class="doc-title">
+                        Provisional Vetting of DPR of IT&ITeS (Application Number: <%= data?._application_number %>)
+                    </div>
+
+                    <!-- Intro Paragraph -->
+                    <div class="list-item">
+                        A Note on Project Report of <span class="bold">
+                            <%= data?._company_name %>
+                        </span> proposal of building an IT&ITeS Unit at <%= data?._project_location %>.
+                    </div>
+
+                    <!-- Point 1 -->
+                    <div class="list-item">
+                        1. The project is proposed by <span class="bold">
+                            <%= data?._company_name %> (PAN: <%= data?._company_pan %>)
+                        </span>
+                    </div>
+
+                    <!-- Point 2 with sub-points -->
+                    <div class="list-item">
+                        2. (i) <span class="bold">
+                            <%= data?._company_name %>
+                        </span> intends to build an IT based Project under IT&ITeS activity.
+
+                        <div class="sub-list">
+                            (ii) The activities/businesses as given in the <span class="bold">Declaration Letter (UDIN:
+                                <%= data?._declaration_letter_udin %>)</span>
+                        </div>
+
+                        <div class="sub-list">
+                            (iii) The proposed application to be pursued in these premises is coverd under IT&ITeS
+                            activity as notified by IT&E Dept., vide <span class="bold">notification <%=
+                                    data?._it_notification_no %> dated <%= data?._it_notification_date %> (UDIN: <%=
+                                            data?._it_notification_udin %>)</span>.
+                        </div>
+                    </div>
+
+                    <!-- Point 3 -->
+                    <div class="list-item">
+                        3. This note addresses the technical aspects of the project report. Financial and commercial
+                        viability/feasibility review is not attempted in this report.
+                    </div>
+
+                    <!-- Date -->
+                    <div class="date-line">
+                        Date: <%= data?._current_date %>
+                    </div>
+
+                    <!-- Signature Block -->
+                    <div class="signature-block">
+                        <span class="sig-title">Authorised Signatory</span>
+                        <span class="sig-title">For Managing Director, Webel</span>
+                        <div class="digital-note">(This document is digitally signed and does not require physical
+                            signature)</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

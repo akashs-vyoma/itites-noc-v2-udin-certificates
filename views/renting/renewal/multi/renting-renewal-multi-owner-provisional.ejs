@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provisional NOC Letter - Renewal Multi Owner</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: "Times New Roman", Times, serif;
+            margin: 0;
+        }
+
+        .page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .page {
+            background-color: white;
+            width: 210mm;
+            min-height: 297mm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box;
+            padding: 15px;
+            page-break-after: always;
+        }
+
+        .border-frame {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px dotted #333;
+            padding: 4px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pattern-border {
+            flex-grow: 1;
+            border: 1px double #333;
+            padding: 40px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Standard Frame Borders */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid #555;
+            pointer-events: none;
+        }
+
+        .page::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 4px double #555;
+            pointer-events: none;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+            text-align: center;
+        }
+
+        .watermark img {
+            width: 100%;
+            height: auto;
+        }
+
+        .content-area {
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #000;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header-logo {
+            height: 80px;
+            width: auto;
+        }
+
+        .doc-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 12pt;
+            margin-bottom: 15px;
+        }
+
+        .ref-number {
+            text-align: center;
+            font-weight: bold;
+            font-size: 10pt;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+        }
+
+        .date-line {
+            margin-bottom: 15px;
+        }
+
+        .section-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 10pt;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th {
+            padding: 6px;
+            background-color: #f9f9f9;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            padding: 6px;
+            vertical-align: middle;
+        }
+
+        .center-text {
+            text-align: center;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .subject {
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-decoration: underline;
+            text-align: justify;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .signature-block {
+            margin-top: 30px;
+        }
+
+        .sig-title {
+            font-weight: bold;
+            display: block;
+        }
+
+        .digital-note {
+            margin-top: 5px;
+            font-size: 10pt;
+        }
+
+        @media print {
+            body {
+                background-color: white;
+            }
+
+            .page {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <!-- PAGE 1 -->
+        <div class="page">
+            <div class="border-frame">
+                <div class="pattern-border">
+                    <div class="watermark">
+                        <img src="images/webel.png" alt="Watermark">
+                    </div>
+
+                    <div class="content-area">
+                        <div class="logo-container">
+                            <img src="images/webel.png" alt="Webel Logo" class="header-logo">
+                        </div>
+
+                        <div class="doc-title">
+                            Provisional NOC of IT/ITeS Renting (Application Number: <%= data?._application_number %>)
+                        </div>
+
+                        <div class="ref-number">
+                            <%= data?._ref_number %>
+                        </div>
+
+                        <div class="date-line">
+                            Date: <%= data?._current_date %>
+                        </div>
+
+                        <div class="section-header">Applicants Details:</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;">Sl No.</th>
+                                    <th style="width: 25%;">Applicants Name</th>
+                                    <th>Address</th>
+                                    <th style="width: 110px;">GSTN/PAN Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (data?._applicants && data?._applicants.length> 0) { %>
+                                    <% data?._applicants.forEach(function(applicant, index) { %>
+                                        <tr>
+                                            <td class="center-text">
+                                                <%= index + 1 %>
+                                            </td>
+                                            <td class="bold">
+                                                <%= applicant?._name %>
+                                            </td>
+                                            <td>
+                                                <%= applicant?._address %>
+                                            </td>
+                                            <td class="center-text">
+                                                <%= applicant?._tax_id %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                            <% } %>
+                            </tbody>
+                        </table>
+
+                        <div class="subject">
+                            Sub: Permission towards sublet of space of <%= data?._sublet_area_sqft %> sq. ft. super
+                                built up area at <%= data?._space_description %>
+                        </div>
+
+                        <div class="salutation">Sir,</div>
+
+                        <p>
+                            This has reference to your (self declaration letter with UDIN: <span class="bold">
+                                <%= data?._udin %>
+                            </span>) regarding the permission for subletting the space to M/S <span class="bold">
+                                <%= data?._tenant_name %>
+                            </span> at <%= data?._space_description %>.
+                        </p>
+
+                        <p>
+                            We would like to confirm our ‘No Objection’ for sub-letting the <%= data?._sublet_area_sqft
+                                %> sq. ft. space to M/S <span class="bold">
+                                    <%= data?._tenant_name %>
+                                </span> for carrying out "<%= data?._activity_type %>" activities as declared by M/S
+                                    <span class="bold">
+                                        <%= data?._tenant_name %>
+                                    </span> vide their letter dated <%= data?._tenant_letter_date %>.
+                                        Your Provisional NOC is effective from <%= data?._noc_start_date %> to <%=
+                                                data?._noc_end_date %>.
+                                                The NOC would lapse automatically as soon as the said tenancies are
+                                                expired by influx of time or the same are determined earlier.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2 -->
+        <div class="page">
+            <div class="border-frame">
+                <div class="pattern-border">
+                    <div class="watermark">
+                        <img src="images/webel.png" alt="Watermark">
+                    </div>
+
+                    <div class="content-area">
+                        <div class="logo-container">
+                            <img src="images/webel.png" alt="Webel Logo" class="header-logo">
+                        </div>
+
+                        <p>
+                            You are advised to comply all legal formalities regarding agreement with your tenants and
+                            inform NDITA about the existence of the said firm in Sector-V area.
+                        </p>
+
+                        <p>
+                            You will have required to pay permission fees @ Rs.<%= data?._permission_fee_rate %>/- per
+                                sq. ft. (permission fees is subject to change from time to time) of the super built up
+                                area along with applicable goods & services taxes to W.B.E.I.D.C. Ltd by the 7th day of
+                                every calendar month. Such fees shall be paid in advance in every month, irrespective of
+                                your receiving rent from the tenant and the non-payment of Permission fees or any kind
+                                of non-compliance may cause automatic cancellation/withdrawal of the NOC granted.
+                        </p>
+
+                        <p>
+                            Moreover, you are requested to inform us about the vacancy and fill up of premises within
+                            the month of its happening otherwise permission fees will be charged upto date as mentioned
+                            in the agreement without any reversal thereon.
+                        </p>
+
+                        <p>Thanking you,</p>
+
+                        <div class="signature-block">
+                            <span class="sig-title">Authorised Signatory</span>
+                            <span class="sig-title">For Managing Director, Webel</span>
+                            <div class="digital-note">(This document is digitally signed and does not require physical
+                                signature)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

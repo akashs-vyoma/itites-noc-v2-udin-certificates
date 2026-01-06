@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Exemption Declaration Letter - Single Party</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: "Times New Roman", Times, serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .page {
+            background-color: white;
+            width: 210mm;
+            min-height: 297mm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .border-frame {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px dotted #333;
+            padding: 4px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pattern-border {
+            flex-grow: 1;
+            border: 1px double #333;
+            padding: 30px 45px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Frame lines as per reference */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid #555;
+            pointer-events: none;
+        }
+
+        .page::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 4px double #555;
+            pointer-events: none;
+        }
+
+        /* Watermark standard */
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+            text-align: center;
+        }
+
+        .watermark img {
+            width: 100%;
+            height: auto;
+        }
+
+        .content-area {
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #000;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            height: 80px;
+            width: auto;
+        }
+
+        .header-meta {
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+        .subject {
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-align: justify;
+        }
+
+        .salutation {
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        /* Document Table Styling */
+        .doc-table {
+            width: 100%;
+            margin: 15px 0 25px 0;
+            border-collapse: collapse;
+        }
+
+        .doc-table th {
+            text-align: left;
+            font-weight: bold;
+            padding-bottom: 8px;
+            font-size: 11pt;
+            border-bottom: 1px solid #000;
+        }
+
+        .doc-table td {
+            padding: 4px 0;
+            font-size: 11pt;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .signature-block {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .sig-name {
+            font-weight: bold;
+            text-transform: uppercase;
+            display: block;
+        }
+
+        .sig-phone {
+            font-weight: bold;
+            display: block;
+        }
+
+        .sig-title {
+            font-weight: bold;
+        }
+
+        @media (max-width: 850px) {
+            .page {
+                width: 100%;
+                height: auto;
+            }
+
+            .pattern-border {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="border-frame">
+            <div class="pattern-border">
+
+                <!-- Standard Watermark -->
+                <div class="watermark">
+                    <img src="images/webel.png" alt="Watermark">
+                </div>
+
+                <div class="content-area">
+
+                    <!-- Standard Header Logo -->
+                    <div class="logo-container">
+                        <img src="images/webel.png" alt="Webel Logo" class="header-logo">
+                    </div>
+
+                    <!-- Date -->
+                    <div class="header-meta">
+                        Date: <%= data?._current_date %>
+                    </div>
+
+                    <!-- Subject -->
+                    <div class="subject">
+                        Subject: Declaration Letter for <%= data?._application_type %>, Application Number: <%=
+                                data?._application_number %>
+                    </div>
+
+                    <!-- Salutation -->
+                    <div class="salutation">
+                        Respected Sir,
+                    </div>
+
+                    <!-- Intro -->
+                    <p>
+                        I am authorized representative of Company <span class="bold">
+                            <%= data?._company_name %>
+                        </span>, hereby submits the following documents (as indicated by UDIN numbers ) for DPR of IT &
+                        ITeS - vetting –
+                    </p>
+
+                    <!-- Document Table Loop -->
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50%;">Document Type</th>
+                                <th style="width: 50%;">Udin Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (data?._documents && data?._documents.length> 0) { %>
+                                <% data?._documents.forEach(function(doc) { %>
+                                    <tr>
+                                        <td>
+                                            <%= doc?._name %>
+                                        </td>
+                                        <td>
+                                            <%= doc?._udin %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                        <% } %>
+                        </tbody>
+                    </table>
+
+                    <!-- Para 1 -->
+                    <p>
+                        On behalf as duly authorised & having competence to do so on behalf of <span class="bold">
+                            <%= data?._company_name %>
+                        </span>, I declare that the we are applying for Tax exemption certificate as the <span
+                            class="bold">
+                            <%= data?._company_name %>
+                        </span> qualifies for the same as per Memo No: <span class="bold">
+                            <%= data?._memo_no %>
+                        </span> dated <span class="bold">
+                            <%= data?._memo_date %>
+                        </span> (UDIN: <span class="bold">
+                            <%= data?._memo_udin %>
+                        </span>) . I shall indemnify and hold the state harmless, including all associated costs in case
+                        of any miss-representation.
+                    </p>
+
+                    <p>I also understand that any kind of miss-representation will invite legal action as per law.</p>
+
+                    <!-- Signature 1 (Authorized Rep) -->
+                    <div class="signature-block">
+                        <span class="sig-name">
+                            <%= data?._rep_name %>
+                        </span>
+                        <span class="sig-phone">
+                            <%= data?._rep_phone %>
+                        </span>
+                        <span class="sig-title">(Signature of authorized representative)</span>
+                    </div>
+
+                    <!-- CA Declaration -->
+                    <p>
+                        I am Chartered Accountant having <span class="bold">registration number <%= data?._ca_reg_number
+                                %></span> have gone through the relevant documents of the <span class="bold">
+                            <%= data?._company_name %>
+                        </span> and concur that <span class="bold">
+                            <%= data?._company_name %>
+                        </span> qualifies for the tax exemption certificate as per Memo No: <span class="bold">
+                            <%= data?._memo_no %>
+                        </span> dated <span class="bold">
+                            <%= data?._memo_date %>
+                        </span> (UDIN: <span class="bold">
+                            <%= data?._memo_udin %>
+                        </span>) .
+                    </p>
+
+                    <p>I also understand that any kind of false representation will invite legal action as per law.</p>
+
+                    <!-- Signature 2 (CA) -->
+                    <div class="signature-block">
+                        <span class="sig-name">
+                            <%= data?._ca_name %>
+                        </span>
+                        <span class="sig-phone">
+                            <%= data?._ca_phone %>
+                        </span>
+                        <span class="sig-title">(Signature of Chartered Accountant)</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Vetting of DPR - Multi Party</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: "Times New Roman", Times, serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .page {
+            background-color: white;
+            width: 210mm;
+            min-height: 297mm;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .border-frame {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px dotted #333;
+            padding: 4px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pattern-border {
+            flex-grow: 1;
+            border: 1px double #333;
+            padding: 40px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Standard Frame lines as per reference */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid #555;
+            pointer-events: none;
+        }
+
+        .page::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 4px double #555;
+            pointer-events: none;
+        }
+
+        /* Standard Watermark */
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+            text-align: center;
+        }
+
+        .watermark img {
+            width: 100%;
+            height: auto;
+        }
+
+        .content-area {
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #000;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Standard Header Logo */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            height: 80px;
+            width: auto;
+        }
+
+        .doc-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 12pt;
+        }
+
+        .section-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-decoration: underline;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 10pt;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th {
+            padding: 8px 5px;
+            background-color: #f9f9f9;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td {
+            padding: 8px 5px;
+            vertical-align: middle;
+        }
+
+        .col-sl {
+            width: 40px;
+            text-align: center;
+        }
+
+        .col-gst {
+            width: 110px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .list-item {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .sub-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .signature-block {
+            margin-top: 40px;
+        }
+
+        .sig-title {
+            font-weight: bold;
+            display: block;
+        }
+
+        .digital-note {
+            margin-top: 5px;
+            font-size: 10pt;
+        }
+
+        @media (max-width: 850px) {
+            .page {
+                width: 100%;
+                height: auto;
+            }
+
+            .pattern-border {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 9pt;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="border-frame">
+            <div class="pattern-border">
+
+                <!-- Standard Watermark -->
+                <div class="watermark">
+                    <img src="images/webel.png" alt="Watermark">
+                </div>
+
+                <div class="content-area">
+
+                    <!-- Standard Header Logo -->
+                    <div class="logo-container">
+                        <img src="images/webel.png" alt="Webel Logo" class="header-logo">
+                    </div>
+
+                    <!-- Document Header -->
+                    <div class="doc-title">
+                        Final Vetting of DPR of IT&ITeS (Application Number: <%= data?._application_number %>)
+                    </div>
+
+                    <!-- Applicants Details Table -->
+                    <div class="section-header">Applicants Details:</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-sl">Sl No.</th>
+                                <th style="width: 25%;">Applicants Name</th>
+                                <th>Address</th>
+                                <th class="col-gst">GSTN/PAN Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (data?._applicants && data?._applicants.length> 0) { %>
+                                <% data?._applicants.forEach(function(applicant, index) { %>
+                                    <tr>
+                                        <td class="col-sl">
+                                            <%= index + 1 %>
+                                        </td>
+                                        <td class="bold">
+                                            <%= applicant?._name %>
+                                        </td>
+                                        <td>
+                                            <%= applicant?._address %>
+                                        </td>
+                                        <td class="col-gst">
+                                            <%= applicant?._tax_id %>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                                        <% } %>
+                        </tbody>
+                    </table>
+
+                    <!-- Note Paragraph -->
+                    <div class="list-item">
+                        A Note on Project Report of submitted by the above mentioned applicants proposal of building an
+                        IT&ITeS Unit at <span class="bold">
+                            <%= data?._project_location %>
+                        </span>.
+                    </div>
+
+                    <!-- Numbered Points -->
+                    <div class="list-item">
+                        1. The project is proposed by the above mentioned applicants
+                    </div>
+
+                    <div class="list-item">
+                        2. (i) The applicants intends to build an IT based Project under IT&ITeS activity.
+
+                        <div class="sub-list">
+                            (ii) The activities/businesses as given in the <span class="bold">Declaration Letter (UDIN:
+                                <%= data?._declaration_letter_udin %>)
+                            </span>
+                        </div>
+
+                        <div class="sub-list">
+                            (iii) The proposed application to be pursued in these premises is coverd under IT&ITeS
+                            activity as notified by IT&E Dept., vide <span class="bold">notification <%=
+                                    data?._it_notification_no %> dated <%= data?._it_notification_date %> (UDIN: <%=
+                                            data?._it_notification_udin %>)</span>.
+                        </div>
+                    </div>
+
+                    <div class="list-item">
+                        3. This note addresses the technical aspects of the project report. Financial and commercial
+                        viability/feasibility review is not attempted in this report.
+                    </div>
+
+                    <!-- Signature Block -->
+                    <div class="signature-block">
+                        <span class="sig-title">Date: <%= data?._current_date %></span>
+                        <span class="sig-title">Authorised Signatory</span>
+                        <span class="sig-title">For Managing Director, Webel</span>
+                        <div class="digital-note">(This document is digitally signed and does not require physical
+                            signature)</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
